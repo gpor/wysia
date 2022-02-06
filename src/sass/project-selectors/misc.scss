@@ -10,18 +10,18 @@ body {
       font-weight: 600;
     }
   }
+  h1 {
+    font-size: clamp(26px, 3vw, 45px);
+  }
+  h2 {
+    font-size: clamp(21px, 2.4vw, 30px);
+  }
+  h3 {
+    font-size: clamp(19px, 1.85vw, 28px);
+  }
   &, p {
     font-size: clamp(16px, 1.47vw, 22px);
   }
-}
-h1 {
-  font-size: clamp(26px, 3vw, 45px);
-}
-h2 {
-  font-size: clamp(21px, 2.4vw, 30px);
-}
-h3 {
-  font-size: clamp(19px, 1.85vw, 28px);
 }
 
 
@@ -37,9 +37,4 @@ h3 {
   .element {
     
   }
-}
-[contenteditable] {
-  min-height: 100px;
-  width: 100%;
-  max-width: 300px;
 }
