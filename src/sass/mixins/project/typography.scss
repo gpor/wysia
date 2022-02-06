@@ -1,0 +1,16 @@
+
+
+
+@mixin h1 {
+    font-size: clamp(26px, 3vw, 45px);
+}
+@mixin h2 {
+    font-size: clamp(21px, 2.4vw, 30px);
+}
+@mixin h3 {
+    font-size: clamp(19px, 1.85vw, 28px);
+}
+@mixin p {
+    font-size: clamp(16px, 1.47vw, 22px);
+}
+

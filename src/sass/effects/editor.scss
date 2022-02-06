@@ -1,0 +1,33 @@
+@use '../mixins/agnostic/misc.scss' as *;
+@use '../mixins/project/editor.scss' as *;
+
+.editor {
+    .-input-container {
+      background-color: #333;
+      color: #fff;
+      .element {
+        display: flex;
+        .-gutter {
+          display: inline-block;
+          flex: 0 0 auto;
+          width: 20px;
+          background-color: #777;
+        }
+        .-input {
+          padding: 4px 7px;
+          width: 100%;
+          flex: 0 1 auto;
+          #{$text-els} {
+            margin: 0;
+            &:focus {
+              outline: none;
+            }
+          }
+          &:focus-within {
+            background-color: #444;
+          }
+        }
+      }
+    }
+  }
+  

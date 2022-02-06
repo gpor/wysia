@@ -4,8 +4,9 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 
 const tagNames = ['p', 'h3', 'h2']
 
-function Editable({value, tagName, tabNext}) {
+function Editable({value, tagName, tabNext, isFocused = false}) {
   const text = useRef(value)
+  const [focused, setFocused] = useState(isFocused)
   const [tagI, setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const ref = useRef()
   
@@ -13,6 +14,14 @@ function Editable({value, tagName, tabNext}) {
   
   useEffect(() => {
     // console.log('useEffect')
+    if (focused) {
+      console.log('focu')
+      setTimeout(() => {
+        ref.current.focus()
+      }, 100)
+
+      // ref.current.focus()
+    }
   })
 
   const onChange = (e) => {
@@ -27,11 +36,15 @@ function Editable({value, tagName, tabNext}) {
       // eslint-disable-next-line default-case
       switch (e.key) {
         case 'ArrowUp':
-          newTagI = (tagI + 1) % tagNames.length
+          if (tagI < tagNames.length - 1) {
+            newTagI = tagI + 1
+          }
           console.log('ArrowUp', ref)
           break;
         case 'ArrowDown':
-          newTagI = (tagI + tagNames.length - 1) % tagNames.length
+          if (tagI > 0) {
+            newTagI = tagI - 1
+          }
           console.log('ArrowDown', ref)
           break;
       }
@@ -46,33 +59,30 @@ function Editable({value, tagName, tabNext}) {
     if (newTagI !== null) {
       console.log('newTagI', newTagI)
       setTagI(newTagI)
-      setTimeout(() => {
-        ref.current.focus()
-      }, 100)
+      // setTimeout(() => {
+      //   ref.current.focus()
+      // }, 100)
 
     }
   }
   
   const onBlur = (e) => {
-    // console.log('onBlur')
+    setFocused(false)
   }
 
   return (
     <div className='element'>
-      <p>Editable</p>
-      <div className="text-window">
-        <div className="-gutter"></div>
-        <div className="-text">
-          <ContentEditable
-            innerRef={ref}
-            html={text.current}
-            disabled={false}
-            onChange={onChange}
-            tagName={tagNames[tagI]}
-            onKeyDown={onKeyDown}
-            onBlur={onBlur}
-          />
-        </div>
+      <div className="-gutter"></div>
+      <div className="-input">
+        <ContentEditable
+          innerRef={ref}
+          html={text.current}
+          disabled={false}
+          onChange={onChange}
+          tagName={tagNames[tagI]}
+          onKeyDown={onKeyDown}
+          onBlur={onBlur}
+        />
       </div>
     </div>
   )

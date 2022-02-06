@@ -1,3 +1,5 @@
 
-@use './agnostic/' as *;
-@use './project-selectors' as *;
+@use './effects/layout.scss' as *;
+@use './effects/typography.scss' as *;
+@use './effects/editor.scss' as *;
+@use './effects/misc.scss' as *;

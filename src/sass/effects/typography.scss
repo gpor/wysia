@@ -1,0 +1,28 @@
+@use '../mixins/agnostic/misc.scss' as *;
+@use '../mixins/project/typography.scss' as *;
+
+body {
+    background-color: #eee;
+    color: #222;
+    font-family: 'Source Sans Pro', sans-serif;
+    &, #{$text-els} {
+      font-weight: 300;
+      strong {
+        font-weight: 600;
+      }
+    }
+    h1 {
+        @include h1;
+    }
+    h2 {
+        @include h2;
+    }
+    h3 {
+        @include h3;
+    }
+    &, p {
+        @include p;
+    }
+  }
+  
+  

@@ -6,11 +6,14 @@ function Editor() {
     }
     return (
       <div className="editor">
-        <Element
-            value="default"
-            tagName="p"
-            tabNext={tabNext}
-        />
+        <div className="-input-container">
+          <Element
+              value="default"
+              tagName="p"
+              tabNext={tabNext}
+              isFocused={true}
+          />
+        </div>
       </div>
     );
   }
