@@ -1,22 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import './sass/app.scss';
+import Editable from './pages/Editable';
+import Foo from './pages/Foo.jsx'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="center-frame">
+        {/* <Foo /> */}
+        <Editable
+          value="default"
+        />
       </header>
     </div>
   );
