@@ -23,7 +23,7 @@ function Editable({value, tagName, tabNext}) {
   const onKeyDown = (e) => {
     // console.log(e.key)
     let newTagI = null;
-    if (e.metaKey) {
+    if (e.metaKey || e.ctrlKey) {
       // eslint-disable-next-line default-case
       switch (e.key) {
         case 'ArrowUp':

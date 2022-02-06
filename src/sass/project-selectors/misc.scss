@@ -1,35 +1,45 @@
+@use '../agnostic/' as *;
+
 body {
-    background-color: #eee;
-    color: #222;
-    font-size: clamp(15px, 1.6vw, 24px);
-  }
-  h1 {
-    font-size: clamp(25px, 3vw, 45px);
-  }
-  h2 {
-    font-size: clamp(20px, 2.4vw, 35px);
-  }
-  h3 {
-    font-size: clamp(17px, 2vw, 30px);
-  }
-  
-  
-  .center-frame {
-    width: 90%;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  
-  .editor {
-    .element {
-      
+  background-color: #eee;
+  color: #222;
+  font-family: 'Source Sans Pro', sans-serif;
+  &, #{$text-els} {
+    font-weight: 300;
+    strong {
+      font-weight: 600;
     }
   }
-  [contenteditable] {
-    min-height: 100px;
-    width: 100%;
-    max-width: 300px;
+  &, p {
+    font-size: clamp(16px, 1.47vw, 22px);
   }
-  
+}
+h1 {
+  font-size: clamp(26px, 3vw, 45px);
+}
+h2 {
+  font-size: clamp(21px, 2.4vw, 30px);
+}
+h3 {
+  font-size: clamp(19px, 1.85vw, 28px);
+}
+
+
+.center-frame {
+  width: 90%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.editor {
+  .element {
+    
+  }
+}
+[contenteditable] {
+  min-height: 100px;
+  width: 100%;
+  max-width: 300px;
+}
