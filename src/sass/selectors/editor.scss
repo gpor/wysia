@@ -1,0 +1,71 @@
+@use '../mixins/agnostic/misc.scss' as *;
+@use '../mixins/project/typography.scss' as *;
+@use '../mixins/project/editor.scss' as *;
+
+.editor {
+    .-input-container {
+        background-color: #333;
+        color: #fff;
+        .element {
+            display: flex;
+            .-gutter {
+                display: inline-block;
+                flex: 0 0 auto;
+                width: 30px;
+                background-color: #777;
+                padding: 4px 7px;
+                cursor: pointer;
+                user-select: none;
+                transition: background-color 0.2s linear;
+                p {
+                    margin: 0;
+                }
+                &:hover {
+                    background-color: #567;
+                }
+            }
+            .-input {
+                padding: 4px 7px;
+                width: 100%;
+                flex: 0 1 auto;
+                p {
+                    margin: 0;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+                // #{$text-els} {
+                //   margin: 0;
+                //   &:focus {
+                //     outline: none;
+                //   }
+                // }
+                &:focus-within {
+                    background-color: #444;
+                }
+            }
+            &.-h2 {
+                // .-input {
+                    p {
+                        @include h2;
+                    }
+                // }
+            }
+            &.-h3 {
+                // .-input {
+                    p {
+                        @include h3;
+                    }
+                // }
+            }
+            &.-p {
+                .-input { 
+                    p {
+                        @include p;
+                    }
+                }
+            }
+        }
+    }
+}
+  
