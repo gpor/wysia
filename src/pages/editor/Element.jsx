@@ -14,16 +14,16 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
   // console.log('value', value, text)
   
   // useEffect(() => {
-    // console.log('useEffect')
-    // console.log('useEffect tagI', tagI)
-    // if (focused) {
-      // console.log('focu')
-      // setTimeout(() => {
-      //   ref.current.focus()
-      // }, 100)
+  // console.log('useEffect')
+  // console.log('useEffect tagI', tagI)
+  // if (focused) {
+  // console.log('focu')
+  // setTimeout(() => {
+  //   ref.current.focus()
+  // }, 100)
 
-      // ref.current.focus()
-    // }
+  // ref.current.focus()
+  // }
   // })
 
   const onChange = (e) => {
@@ -70,9 +70,9 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
     //   console.log('setTagI(  ', newTagI, '  )')
     //   console.log(' ');
     //   setTagI(newTagI)
-      // setTimeout(() => {
-      //   ref.current.focus()
-      // }, 100)
+    // setTimeout(() => {
+    //   ref.current.focus()
+    // }, 100)
 
     // }
     // newTagI = null
