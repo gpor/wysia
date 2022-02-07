@@ -8,10 +8,22 @@ function Editor() {
     <div className="editor">
       <div className="-input-container">
         <Element
-          value="default"
-          tagName="p"
+          value="Header"
+          tagName="h2"
+          tabNext={tabNext}
+          isFocused={false}
+        />
+        <Element
+          value=""
+          tagName="h3"
           tabNext={tabNext}
           isFocused={true}
+        />
+        <Element
+          value=""
+          tagName="p"
+          tabNext={tabNext}
+          isFocused={false}
         />
       </div>
     </div>

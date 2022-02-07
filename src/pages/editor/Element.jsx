@@ -1,81 +1,66 @@
 
 import {useState, useRef, useEffect} from 'react'
 import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/package/react-contenteditable
+import PropTypes from 'prop-types';
 
 const tagNames = ['p', 'h3', 'h2']
 
 function Editable({value, tagName, tabNext, isFocused = false}) {
   const text = useRef(value)
-  // const [focused, setFocused] = useState(isFocused)
-  const [tagI, setTagI] = useState(2)
-  // const [tagI, setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
-  const ref = useRef()
+  const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
+  const tagIRef = useRef(tagI)
+  const inputRef = useRef()
+  const setTagI = (newTagI) => {
+    tagIRef.current = newTagI
+    _setTagI(newTagI)
+  }
   
-  // console.log('value', value, text)
-  
-  // useEffect(() => {
-  // console.log('useEffect')
-  // console.log('useEffect tagI', tagI)
-  // if (focused) {
-  // console.log('focu')
-  // setTimeout(() => {
-  //   ref.current.focus()
-  // }, 100)
-
-  // ref.current.focus()
-  // }
-  // })
+  useEffect(() => {
+    console.log('useEffect []')
+    if (isFocused) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   const onChange = (e) => {
     text.current = e.target.value;
-    console.log('text', text)
   }
 
   const onKeyDown = (e) => {
-    // console.log(e.key)
-    console.log('onKeyDown', tagI)
     let newTagI = null;
     if (e.metaKey || e.ctrlKey) {
       // eslint-disable-next-line default-case
-      // switch (e.key) {
-      //   case 'ArrowUp':
-      //     if (tagI < tagNames.length - 1) {
-      //       console.log('inc')
-      //       newTagI = tagI + 1
-      //     }
-      //     console.log('ArrowUp', tagI, newTagI)
-      //     e.preventDefault();
-      //     break;
-      //     case 'ArrowDown':
-      //       if (tagI > 0) {
-      //       console.log('dec')
-      //       newTagI = tagI - 1
-      //     }
-      //     console.log('ArrowDown', tagI, newTagI)
-      //     e.preventDefault();
+      switch (e.key) {
+      case 'ArrowUp':
+        if (tagIRef.current < tagNames.length - 1) {
+          console.log('inc')
+          newTagI = tagIRef.current + 1
+        }
+        e.preventDefault();
+        break;
+      case 'ArrowDown':
+        if (tagIRef.current > 0) {
+          console.log('dec')
+          newTagI = tagIRef.current - 1
+        }
+        e.preventDefault();
           
-      //     break;
-      // }
+        break;
+      }
     } else {
       // eslint-disable-next-line default-case
-      // switch (e.key) {
-      //   case 'Tab':
-      //     tabNext()
-      //     e.preventDefault();
+      switch (e.key) {
+      case 'Tab':
+        tabNext()
+        e.preventDefault();
           
-      //     break
-      // }
+        break
+      }
     }
-    // if (newTagI !== null) {
-    //   console.log('setTagI(  ', newTagI, '  )')
-    //   console.log(' ');
-    //   setTagI(newTagI)
-    // setTimeout(() => {
-    //   ref.current.focus()
-    // }, 100)
-
-    // }
-    // newTagI = null
+    if (newTagI !== null) {
+      setTagI(newTagI)
+    }
+    newTagI = null
   }
   
   const onBlur = (e) => {
@@ -96,7 +81,7 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
       </div>
       <div className="-input">
         <ContentEditable
-          innerRef={ref}
+          innerRef={inputRef}
           html={text.current}
           disabled={false}
           onChange={onChange}
@@ -107,6 +92,13 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
       </div>
     </div>
   )
+}
+
+Editable.propTypes = {
+  value: PropTypes.string,
+  tagName: PropTypes.string,
+  tabNext: PropTypes.func,
+  isFocused: PropTypes.bool,
 }
 
 export default Editable
