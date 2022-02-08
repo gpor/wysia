@@ -1,4 +1,11 @@
 
+body {
+    background-color: #eee;
+    padding-top: 10vh;
+    @media (prefers-color-scheme: dark) {
+        background-color: #222;
+    }
+}    
 
 .center-frame {
     width: 90%;

@@ -1,16 +1,21 @@
+@use '../agnostic/misc.scss' as *;
 
+// @mixin text-color [
+//     color: #222;
+    
+// ]
 
 
 @mixin h1 {
-    font-size: clamp(26px, 3vw, 45px);
+    @include clamp(28, 50);
 }
 @mixin h2 {
-    font-size: clamp(21px, 2.4vw, 30px);
+    @include clamp(22, 36);
 }
 @mixin h3 {
-    font-size: clamp(19px, 1.85vw, 28px);
+    @include clamp(18, 25);
 }
 @mixin p {
-    font-size: clamp(16px, 1.47vw, 22px);
+    @include clamp(14, 18);
 }
 

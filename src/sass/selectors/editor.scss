@@ -12,8 +12,8 @@
             .-gutter {
                 display: inline-block;
                 flex: 0 0 auto;
-                width: 30px;
-                background-color: #777;
+                width: 38px;
+                background-color: #555;
                 padding: 4px 7px;
                 cursor: pointer;
                 user-select: none;
@@ -24,7 +24,7 @@
                     transition: opacity 0.2s linear;
                 }
                 &:hover {
-                    background-color: #567;
+                    // background-color: #5e6e73;
                     p {
                         opacity: 1;
                     }
@@ -39,15 +39,6 @@
                     &:focus {
                         outline: none;
                     }
-                }
-                // #{$text-els} {
-                //   margin: 0;
-                //   &:focus {
-                //     outline: none;
-                //   }
-                // }
-                &:focus-within {
-                    background-color: #444;
                 }
             }
             &.-h2 {
@@ -69,6 +60,14 @@
                     p {
                         @include p;
                     }
+                }
+            }
+            &:focus-within {
+                .-gutter {
+                    background-color: #6a6a6a;
+                }
+                .-input {
+                    background-color: #3a3a3a;
                 }
             }
         }

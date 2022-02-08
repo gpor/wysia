@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const tagNames = ['p', 'h3', 'h2']
 
-function Editable({value, tagName, tabNext, isFocused = false}) {
+function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
   const text = useRef(value)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const tagIRef = useRef(tagI)
@@ -16,14 +16,14 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
   }
   
   useEffect(() => {
-    console.log('useEffect []')
     if (isFocused) {
       inputRef.current.focus()
     }
   }, [])
 
   const onChange = (e) => {
-    text.current = e.target.value;
+    // console.log('e.target.value', e.target.value)
+    text.current = inputRef.current.innerHTML;
   }
 
   const onKeyDown = (e) => {
@@ -33,14 +33,12 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
       switch (e.key) {
       case 'ArrowUp':
         if (tagIRef.current < tagNames.length - 1) {
-          console.log('inc')
           newTagI = tagIRef.current + 1
         }
         e.preventDefault();
         break;
       case 'ArrowDown':
         if (tagIRef.current > 0) {
-          console.log('dec')
           newTagI = tagIRef.current - 1
         }
         e.preventDefault();
@@ -48,12 +46,24 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
         break;
       }
     } else {
+      const range = document.getSelection().getRangeAt(0)
+
       // eslint-disable-next-line default-case
       switch (e.key) {
       case 'Tab':
-        tabNext()
+        // toNext()
         e.preventDefault();
-          
+        console.log('inputRef', inputRef.current.innerText, inputRef.current.innerHTML)
+        console.log('inputRef.current.selectionStart', range.startOffset, range.endOffset)
+        // inputRef.current.innerHTML += '&#09;'
+        text.current += '&#09;'
+        // inputRef.current.innerText = text.current + '\t'
+        // onChange()
+        break
+      case 'Enter':
+        insertBeneath()
+        e.preventDefault();
+            
         break
       }
     }
@@ -97,7 +107,8 @@ function Editable({value, tagName, tabNext, isFocused = false}) {
 Editable.propTypes = {
   value: PropTypes.string,
   tagName: PropTypes.string,
-  tabNext: PropTypes.func,
+  toNext: PropTypes.func,
+  insertBeneath: PropTypes.func,
   isFocused: PropTypes.bool,
 }
 

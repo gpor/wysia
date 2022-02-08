@@ -2,7 +2,6 @@
 @use '../mixins/project/typography.scss' as *;
 
 body {
-    background-color: #eee;
     color: #222;
     font-family: 'Source Sans Pro', sans-serif;
     &, #{$text-els} {

@@ -1,8 +1,11 @@
 import Element from './editor/Element';
 
 function Editor() {
-  const tabNext = () => {
-    console.log('tabNext')
+  const toNext = () => {
+    console.log('toNext')
+  }
+  const insertBeneath = () => {
+    console.log('insertBeneath')
   }
   return (
     <div className="editor">
@@ -10,19 +13,22 @@ function Editor() {
         <Element
           value="Header"
           tagName="h2"
-          tabNext={tabNext}
+          toNext={toNext}
+          insertBeneath={insertBeneath}
           isFocused={false}
         />
         <Element
           value=""
           tagName="h3"
-          tabNext={tabNext}
+          toNext={toNext}
+          insertBeneath={insertBeneath}
           isFocused={true}
         />
         <Element
           value=""
           tagName="p"
-          tabNext={tabNext}
+          toNext={toNext}
+          insertBeneath={insertBeneath}
           isFocused={false}
         />
       </div>
