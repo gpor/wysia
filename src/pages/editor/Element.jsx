@@ -47,20 +47,26 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
       }
     } else {
       const range = document.getSelection().getRangeAt(0)
-
+      const {startOffset, endOffset} = range
+      const leftOfSel = text.current.substr(0, startOffset)
       // eslint-disable-next-line default-case
       switch (e.key) {
       case 'Tab':
         // toNext()
         e.preventDefault();
-        console.log('inputRef', inputRef.current.innerText, inputRef.current.innerHTML)
-        console.log('inputRef.current.selectionStart', range.startOffset, range.endOffset)
-        // inputRef.current.innerHTML += '&#09;'
-        text.current += '&#09;'
-        // inputRef.current.innerText = text.current + '\t'
-        // onChange()
+        inputRef.current.innerHTML = '&#09;' + text.current
+        onChange()
         break
       case 'Enter':
+        console.log(' ');
+        console.log('Enter');
+        console.log(' ');
+        console.log('inputRef.current.selectionStart', startOffset, endOffset)
+        console.log('leftOfSel', leftOfSel)
+        // eslint-disable-next-line no-case-declarations
+        const node = document.createElement('br');
+        // node.classList.add('break')
+        range.insertNode(node)
         insertBeneath()
         e.preventDefault();
             
@@ -78,7 +84,14 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
   }
   
   const cycleTag = (e) => {
+    /* todo - drop-down menu of elements */
     setTagI((tagI + 1) % tagNames.length);
+  }
+  
+  const clickButton = () => {
+    inputRef.current.innerText = ''
+    inputRef.current.focus()
+    onChange()
   }
 
   return (
@@ -100,6 +113,9 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
           onBlur={onBlur}
         />
       </div>
+      {/* <h1
+        onClick={clickButton}
+      >Click</h1> */}
     </div>
   )
 }
