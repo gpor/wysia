@@ -5,6 +5,17 @@ import PropTypes from 'prop-types';
 
 const tagNames = ['p', 'h3', 'h2']
 
+const addParent = (el, stack = []) => {
+  const parent = el.parentElement
+  const tn = parent.tagName;
+  console.log('tagName', tn)
+  if (stack.length > 10 || tn === 'P') {
+    return stack;
+  }
+  stack.push(tn);
+  return addParent(parent, stack);
+}
+
 function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
   const text = useRef(value)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
@@ -67,6 +78,10 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
         const node = document.createElement('br');
         // node.classList.add('break')
         range.insertNode(node)
+        
+        console.log(addParent(node))
+        
+        
         insertBeneath()
         e.preventDefault();
             
