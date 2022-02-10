@@ -24,6 +24,6 @@ module.exports = {
       "objects": "always-multiline",
       "arrays": "always-multiline",
     }],
-    "indent": [2, 2],
+    "indent": [2, 2, { "SwitchCase": 1 }],
   },
 }
