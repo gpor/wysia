@@ -19,6 +19,7 @@ module.exports = {
   ],
   "rules": {
     "no-unused-vars": "off",
+    "no-empty": "off",
     "react/react-in-jsx-scope": "off",
     "comma-dangle": ["error", {
       "objects": "always-multiline",

@@ -18,7 +18,7 @@ function Editor() {
           isFocused={false}
         />
         <Element
-          value=""
+          value="one <b>two <i>thr four</i> five</b> six"
           tagName="h3"
           toNext={toNext}
           insertBeneath={insertBeneath}

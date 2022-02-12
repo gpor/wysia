@@ -5,32 +5,62 @@ import PropTypes from 'prop-types';
 
 const tagNames = ['p', 'h3', 'h2']
 const nodeTypes = ['no_nodeType','ELEMENT_NODE','ATTRIBUTE_NODE','TEXT_NODE','CDATA_SECTION_NODE','PROCESSING_INSTRUCTION_NODE','COMMENT_NODE','DOCUMENT_NODE','DOCUMENT_TYPE_NODE','DOCUMENT_FRAGMENT_NODE']
-const addParent = (el, stack = []) => {
-  const parent = el.parentElement
-  const tn = parent.tagName;
-  // console.log('tagName', tn)
-  stack.push(parent);
-  if (stack.length > 10 || tn === 'P') {
-    return stack;
-  }
-  // stack.push(parent);
-  return addParent(parent, stack);
-}
 
 
 const splitElsRecur = (el, stack) => {
-  const tn = el.tagName;
-  // console.log('tagName', tn)
-  stack.push(el);
-  if (stack.length > 10 || tn === 'P') {
+  if (stack.length > 10 || el.tagName === 'P') {
     return stack;
   }
-  // stack.push(parent);
-  return splitElsRecur(el.parentElement, stack);
+  const parent = el.parentElement;
+  stack.push(parent);
+  return splitElsRecur(parent, stack);
 }
 const splitEls = (el) => {
-  return splitElsRecur(el, [])
+  console.log('splitEls()', el.tagName)
+  return splitElsRecur(el, [el])
 }
+
+const splitHtmlRecur = (el, left, right) => {
+  if (el.tagName === 'P') {
+    return {left, right}
+  }
+  const parent = el.parentElement
+  // left.push(parent.tagName)
+  // right.push(parent.tagName)
+  let rightOfInner = false;
+  const prepend = [];
+  const append = [];
+  parent.childNodes.forEach(node => {
+    if (rightOfInner) {
+      append.push(node)
+    } else {
+      if (node.isEqualNode(el)) {
+        rightOfInner = true;
+      } else {
+        prepend.push(node)
+      }
+    }
+  })
+  return splitHtmlRecur(parent, {
+    prepend,
+    tempPrepend: prepend.map(n => n.textContent),
+    node: parent.cloneNode(),
+    inner: left,
+  }, {
+    node: parent.cloneNode(),
+    inner: right,
+    append,
+    tempAppend: append.map(n => n.textContent),
+  })
+}
+const splitHtml = (el) => {
+  return splitHtmlRecur(
+    el,
+    {node: el, inner: null},
+    {node: el, inner: null}
+  )
+}
+
 
 function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
   const text = useRef(value)
@@ -97,17 +127,9 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
         
         
           // eslint-disable-next-line no-case-declarations
-          // let wrappers = addParent(node)
-          // console.log(wrappers)
-          // console.log(' ')
-          // wrappers.forEach(wrapper => {
-          //   console.log(wrapper.tagName)
-          //   // console.log(wrapper)
-          //   wrapper.childNodes.forEach(node => {
-          //     console.log('node', node, nodeTypes[node.nodeType])
-          //   })
-          //   console.log(' ')
-          // })
+          let {left, right} = splitHtml(node)
+          console.log('left', left)
+          console.log('right', right)
         
           // eslint-disable-next-line no-case-declarations
           let wrappers2 = splitEls(node)
