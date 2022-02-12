@@ -2,9 +2,7 @@
 import {useState, useRef, useEffect} from 'react'
 import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/package/react-contenteditable
 import PropTypes from 'prop-types';
-
-const tagNames = ['p', 'h3', 'h2']
-const nodeTypes = ['no_nodeType','ELEMENT_NODE','ATTRIBUTE_NODE','TEXT_NODE','CDATA_SECTION_NODE','PROCESSING_INSTRUCTION_NODE','COMMENT_NODE','DOCUMENT_NODE','DOCUMENT_TYPE_NODE','DOCUMENT_FRAGMENT_NODE']
+import {tagNames, nodeTypes, splitHtml} from '../../lib/elements.js'
 
 
 const splitElsRecur = (el, stack) => {
@@ -20,46 +18,6 @@ const splitEls = (el) => {
   return splitElsRecur(el, [el])
 }
 
-const splitHtmlRecur = (el, left, right) => {
-  if (el.tagName === 'P') {
-    return {left, right}
-  }
-  const parent = el.parentElement
-  // left.push(parent.tagName)
-  // right.push(parent.tagName)
-  let rightOfInner = false;
-  const prepend = [];
-  const append = [];
-  parent.childNodes.forEach(node => {
-    if (rightOfInner) {
-      append.push(node)
-    } else {
-      if (node.isEqualNode(el)) {
-        rightOfInner = true;
-      } else {
-        prepend.push(node)
-      }
-    }
-  })
-  return splitHtmlRecur(parent, {
-    prepend,
-    tempPrepend: prepend.map(n => n.textContent),
-    node: parent.cloneNode(),
-    inner: left,
-  }, {
-    node: parent.cloneNode(),
-    inner: right,
-    append,
-    tempAppend: append.map(n => n.textContent),
-  })
-}
-const splitHtml = (el) => {
-  return splitHtmlRecur(
-    el,
-    {node: el, inner: null},
-    {node: el, inner: null}
-  )
-}
 
 
 function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
@@ -118,43 +76,43 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
           console.log(' ');
           console.log('Enter');
           console.log(' ');
-          console.log('inputRef.current.selectionStart', startOffset, endOffset)
-          console.log('leftOfSel', leftOfSel)
+          // console.log('inputRef.current.selectionStart', startOffset, endOffset)
+          // console.log('leftOfSel', leftOfSel)
           // eslint-disable-next-line no-case-declarations
-          const node = document.createElement('br');
+          const br = document.createElement('br');
           // node.classList.add('break')
-          range.insertNode(node)
+          range.insertNode(br)
         
         
           // eslint-disable-next-line no-case-declarations
-          let {left, right} = splitHtml(node)
+          let {left, right} = splitHtml(br)
           console.log('left', left)
           console.log('right', right)
         
           // eslint-disable-next-line no-case-declarations
-          let wrappers2 = splitEls(node)
-          console.log('wrappers2', wrappers2)
-          console.log(' ')
-          wrappers2.forEach(wrapper => {
-            console.log(wrapper.tagName)
-            // console.log(wrapper)
-            wrapper.childNodes.forEach(node => {
-              const type = nodeTypes[node.nodeType]
-              switch (type) {
-                case 'TEXT_NODE':
-                  console.log('__'+node.textContent);
-                  break;
-                case 'ELEMENT_NODE':
-                  console.log('__'+node.tagName);
-                  break;
-                default:
-                  console.log('--', type)
-                  break;
-              }
-              // console.log('node', node, nodeTypes[node.nodeType])
-            })
-            console.log(' ')
-          })
+          // let wrappers2 = splitEls(node)
+          // console.log('wrappers2', wrappers2)
+          // console.log(' ')
+          // wrappers2.forEach(wrapper => {
+          //   console.log(wrapper.tagName)
+          //   // console.log(wrapper)
+          //   wrapper.childNodes.forEach(node => {
+          //     const type = nodeTypes[node.nodeType]
+          //     switch (type) {
+          //       case 'TEXT_NODE':
+          //         console.log('__'+node.textContent);
+          //         break;
+          //       case 'ELEMENT_NODE':
+          //         console.log('__'+node.tagName);
+          //         break;
+          //       default:
+          //         console.log('--', type)
+          //         break;
+          //     }
+          //     // console.log('node', node, nodeTypes[node.nodeType])
+          //   })
+          //   console.log(' ')
+          // })
 
         
           insertBeneath()
