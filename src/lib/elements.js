@@ -13,22 +13,16 @@ const splitHtmlRecur = (wrapper, origin, left = null, right = null) => {
     rn.appendChild(right)
   }
   let leftOfInner = true;
-  console.log('wrapper', wrapper.tagName)
   wrapper.childNodes.forEach(node => {
-    console.log('=====')
     if (leftOfInner) {
       if (node.isEqualNode(origin)) {
-        console.log('found center', node.tagName)
         leftOfInner = false;
       } else {
-        console.log('appending to ln', node.textContent)
         ln.appendChild(node.cloneNode(false))
       }
     } else {
-      console.log('appending to rn', node.textContent)
       rn.appendChild(node.cloneNode(false))
     }
-    console.log('---')
   })
   if (left !== null) {
     ln.appendChild(left)
@@ -43,7 +37,12 @@ const splitHtmlRecur = (wrapper, origin, left = null, right = null) => {
 const splitHtml = (br) => {
   return splitHtmlRecur(br.parentElement, br)
 }
+const splitAtRange = (range) => {
+  const br = document.createElement('br');
+  range.insertNode(br)
+  return splitHtml(br);
+}
 
 
 
-export {tagNames, nodeTypes, splitHtml}
+export {tagNames, nodeTypes, splitAtRange}

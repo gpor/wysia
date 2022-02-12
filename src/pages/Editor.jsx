@@ -4,8 +4,8 @@ function Editor() {
   const toNext = () => {
     console.log('toNext')
   }
-  const insertBeneath = () => {
-    console.log('insertBeneath')
+  const insertBeneath = ({left, right}) => {
+    console.log('insertBeneath', left, right)
   }
   return (
     <div className="editor">
