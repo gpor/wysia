@@ -1,36 +1,36 @@
+import { useState } from 'react';
+import { initContent } from '../lib/content';
+import { tagNames } from '../lib/elements.js'
 import Element from './editor/Element';
 
 function Editor() {
+  const [content, setContent] = useState(initContent(1))
   const toNext = () => {
-    console.log('toNext')
+    console.log('toNext') /* todo */
   }
-  const insertBeneath = ({left, right}) => {
-    console.log('insertBeneath', left, right)
+  const insertBeneath = (elementI, tagI, htmlLeft, htmlRight) => {
+    setContent(content => {
+      return content.insertElement(elementI, htmlLeft, {
+        tagName: tagNames[tagI],
+        value: htmlRight,
+        isFocused: true,
+      })
+    })
   }
   return (
     <div className="editor">
       <div className="-input-container">
-        <Element
-          value="Header"
-          tagName="h2"
-          toNext={toNext}
-          insertBeneath={insertBeneath}
-          isFocused={false}
-        />
-        <Element
-          value="one <b>two <i>thr four</i> five</b> six"
-          tagName="h3"
-          toNext={toNext}
-          insertBeneath={insertBeneath}
-          isFocused={true}
-        />
-        <Element
-          value=""
-          tagName="p"
-          toNext={toNext}
-          insertBeneath={insertBeneath}
-          isFocused={false}
-        />
+        {content.elements.map((element, i) => (
+          <Element
+            key={element.id}
+            elementI={i}
+            value={element.value}
+            tagName={element.tagName}
+            toNext={toNext}
+            insertBeneath={insertBeneath}
+            isFocused={element.isFocused}
+          />
+        ))}
       </div>
     </div>
   );

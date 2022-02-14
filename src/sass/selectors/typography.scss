@@ -6,7 +6,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     &, #{$text-els} {
       font-weight: 300;
-      strong {
+      strong, b {
         font-weight: 600;
       }
     }

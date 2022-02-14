@@ -1,9 +1,9 @@
-import {useState, useRef, useEffect} from 'react'
+import { useState, useRef, useEffect } from 'react'
 import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/package/react-contenteditable
 import PropTypes from 'prop-types';
-import {tagNames, splitAtRange} from '../../lib/elements.js'
+import { tagNames, splitAtRange } from '../../lib/elements.js'
 
-function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
+function Editable({elementI, value, tagName, toNext, insertBeneath, isFocused = false}) {
   const text = useRef(value)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const tagIRef = useRef(tagI)
@@ -21,6 +21,10 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
 
   const onChange = (e) => {
     text.current = inputRef.current.innerHTML;
+  }
+  
+  const split = ({left , right}) => {
+    insertBeneath(elementI, tagI, left.innerHTML, right.innerHTML)
   }
 
   const onKeyDown = (e) => {
@@ -53,7 +57,7 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
           onChange()
           break
         case 'Enter':
-          insertBeneath(splitAtRange(range))
+          split(splitAtRange(range))
           e.preventDefault();
           break
       }
@@ -97,6 +101,7 @@ function Editable({value, tagName, toNext, insertBeneath, isFocused = false}) {
 }
 
 Editable.propTypes = {
+  elementI: PropTypes.number,
   value: PropTypes.string,
   tagName: PropTypes.string,
   toNext: PropTypes.func,
