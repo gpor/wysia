@@ -8,7 +8,7 @@ const dummyElements = [
   },
   {
     tagName: 'h3',
-    value: 'one <b>two <i>thr four</i> five</b> six',
+    value: 'one <b style="color:orange">two <i>thr four</i> five</b> six',
   },
   {
     tagName: 'p',
@@ -17,7 +17,7 @@ const dummyElements = [
 ]
 
 class Content {
-  constructor({elements, focusI = null, insertElement = null}) {
+  constructor({ elements, focusI = null, insertElement = null }) {
     this.elements = []
     elements.forEach((element, i) => {
       element.id = uuidv4()
@@ -35,7 +35,7 @@ class Content {
     })
   }
   insertElement(pos, htmlLeft, props) {
-    const element = {...props}
+    const element = { ...props }
     return new Content({
       elements: this.elements,
       insertElement: {

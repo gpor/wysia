@@ -3,7 +3,7 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 import PropTypes from 'prop-types';
 import { tagNames, splitAtRange } from '../../lib/elements.js'
 
-function Editable({elementI, value, tagName, toNext, insertBeneath, isFocused = false}) {
+function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused = false }) {
   const text = useRef(value)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const tagIRef = useRef(tagI)
@@ -23,8 +23,8 @@ function Editable({elementI, value, tagName, toNext, insertBeneath, isFocused = 
     text.current = inputRef.current.innerHTML;
   }
   
-  const split = ({left , right}) => {
-    insertBeneath(elementI, tagI, left.innerHTML, right.innerHTML)
+  const split = ({ left , right, hasRight }) => {
+    insertBeneath(elementI, tagI, left.innerHTML, right.innerHTML, hasRight)
   }
 
   const onKeyDown = (e) => {
@@ -47,7 +47,7 @@ function Editable({elementI, value, tagName, toNext, insertBeneath, isFocused = 
       }
     } else {
       const range = document.getSelection().getRangeAt(0)
-      const {startOffset, endOffset} = range
+      const { startOffset, endOffset } = range
       const leftOfSel = text.current.substr(0, startOffset)
       switch (e.key) {
         case 'Tab':

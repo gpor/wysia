@@ -15,5 +15,13 @@ body {
     margin-right: auto;
 }
 
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    > div {
+        width: 100%;
+    }
+}
+
 
 

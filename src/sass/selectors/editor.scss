@@ -14,7 +14,7 @@
                 flex: 0 0 auto;
                 width: 38px;
                 background-color: #555;
-                padding: 4px 7px;
+                padding: 0 7px;
                 cursor: pointer;
                 user-select: none;
                 transition: background-color 0.2s linear;
@@ -22,6 +22,9 @@
                     margin: 0;
                     opacity: 0.5;
                     transition: opacity 0.2s linear;
+                    line-height: 0.5;
+                    position: relative;
+                    top: 10px;
                 }
                 &:hover {
                     // background-color: #5e6e73;
@@ -31,7 +34,7 @@
                 }
             }
             .-input {
-                padding: 4px 7px;
+                padding: 2px 7px;
                 width: 100%;
                 flex: 0 1 auto;
                 p {

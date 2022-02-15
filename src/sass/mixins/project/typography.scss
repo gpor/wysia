@@ -13,9 +13,9 @@
     @include clamp(22, 36);
 }
 @mixin h3 {
-    @include clamp(18, 25);
+    @include clamp(19, 27);
 }
 @mixin p {
-    @include clamp(14, 18);
+    @include clamp(16, 20);
 }
 

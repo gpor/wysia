@@ -26,5 +26,17 @@ module.exports = {
       "arrays": "always-multiline",
     }],
     "indent": [2, 2, { "SwitchCase": 1 }],
+    "object-curly-spacing": [
+      "error",
+      "always",
+    ],
+    "space-before-function-paren": [
+      "error",
+      "never",
+    ],
+    "space-before-blocks": [
+      "error",
+      "always",
+    ],
   },
 }
