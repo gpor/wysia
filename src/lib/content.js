@@ -8,11 +8,15 @@ const dummyElements = [
   },
   {
     tagName: 'h3',
-    value: 'one <b style="color:orange">two <i>thr four</i> five</b> six',
+    value: 'One <b style="color:orange">two <i>thr four</i> five</b> six',
   },
   {
     tagName: 'p',
-    value: '',
+    value: 'The quick brown fox jumps over the lazy dog. I quickly packed my lunch  for the zoo with grapes, veal, and quince jam sandwiches.  The quick brown fox jumps over the lazy dog. I quickly packed my lunch box for the zoo with grapes, veal, and quince jam sandwiches.',
+  },
+  {
+    tagName: 'p',
+    value: 'The quick brown fox jumps over the lazy dog. I quickly packed my lunch  for the zoo with grapes, veal, and quince jam sandwiches.  The quick brown fox jumps over the lazy dog. I quickly packed my lunch box for the zoo with grapes, veal, and quince jam sandwiches.',
   },
 ]
 
@@ -36,6 +40,13 @@ class Content {
   }
   insertElement(pos, htmlLeft, props) {
     const element = { ...props }
+    
+    /*
+    todo - issue here, re-instantiating a new Content is good but
+          every element gets a new uuidv4() generated
+          can't be good
+    */
+    
     return new Content({
       elements: this.elements,
       insertElement: {

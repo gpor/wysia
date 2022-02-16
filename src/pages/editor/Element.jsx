@@ -24,50 +24,48 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
   }
   
   const split = ({ left , right, hasRight }) => {
-    insertBeneath(elementI, tagI, left.innerHTML, right.innerHTML, hasRight)
+    console.log('gonna split - current tagIRef', tagIRef.current)
+    insertBeneath(elementI, tagIRef.current, left.innerHTML, right.innerHTML, hasRight)
   }
 
   const onKeyDown = (e) => {
     let newTagI = null;
-    // console.log('e.key', e.key)
-    if (e.metaKey || e.ctrlKey) {
-      switch (e.key) {
-        case 'ArrowUp':
-          if (tagIRef.current < tagNames.length - 1) {
-            newTagI = tagIRef.current + 1
-          }
-          e.preventDefault();
-          break;
-        case 'ArrowDown':
-          if (tagIRef.current > 0) {
-            newTagI = tagIRef.current - 1
-          }
-          e.preventDefault();
-          
-          break;
+    // console.log('e.key', e.key, e.shiftKey)
+    if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowUp') {
+      if (tagIRef.current < tagNames.length - 1) {
+        newTagI = tagIRef.current + 1
       }
-    } else if (e.key === 'ArrowUp') {
+    } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (tagIRef.current > 0) {
+        newTagI = tagIRef.current - 1
+      }
+    } else if (e.shiftKey && e.key === 'Enter') {
+      // todo
+      // allow normal Enter behaivor
       
+      
+    } else if (e.key === 'ArrowUp') {
+      // todo
+      // 
       
       
     } else if (e.key === 'ArrowDown') {
       // todo
-    } else {
+      
+      
+      
+    } else if (e.key === 'Enter') {
       const range = document.getSelection().getRangeAt(0)
-      // const { startOffset, endOffset } = range
-      // const leftOfSel = text.current.substr(0, startOffset)
-      switch (e.key) {
-        case 'Tab':
-          // toNext()
-          e.preventDefault();
-          inputRef.current.innerHTML = '&#09;' + text.current
-          onChange()
-          break
-        case 'Enter':
-          split(splitAtRange(range))
-          e.preventDefault();
-          break
-      }
+      split(splitAtRange(range))
+      e.preventDefault();
+      
+      
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      inputRef.current.innerHTML = '&#09;' + text.current
+      onChange()
+  
     }
     if (newTagI !== null) {
       setTagI(newTagI)
@@ -81,16 +79,16 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
   
   const cycleTag = (e) => {
     /* todo - drop-down menu of elements */
-    setTagI((tagI + 1) % tagNames.length);
+    setTagI((tagIRef.current + 1) % tagNames.length);
   }
   
   return (
-    <div className={`element -${tagNames[tagI]}`}>
+    <div className={`element -${tagNames[tagIRef.current]}`}>
       <div
         className="-gutter"
         onClick={cycleTag}
       >
-        <p>{tagNames[tagI]}</p>
+        <p>{tagNames[tagIRef.current]}</p>
       </div>
       <ContentEditable
         className="-inp"
