@@ -29,6 +29,7 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
 
   const onKeyDown = (e) => {
     let newTagI = null;
+    // console.log('e.key', e.key)
     if (e.metaKey || e.ctrlKey) {
       switch (e.key) {
         case 'ArrowUp':
@@ -45,10 +46,16 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
           
           break;
       }
+    } else if (e.key === 'ArrowUp') {
+      
+      
+      
+    } else if (e.key === 'ArrowDown') {
+      // todo
     } else {
       const range = document.getSelection().getRangeAt(0)
-      const { startOffset, endOffset } = range
-      const leftOfSel = text.current.substr(0, startOffset)
+      // const { startOffset, endOffset } = range
+      // const leftOfSel = text.current.substr(0, startOffset)
       switch (e.key) {
         case 'Tab':
           // toNext()
@@ -85,17 +92,16 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
       >
         <p>{tagNames[tagI]}</p>
       </div>
-      <div className="-input">
-        <ContentEditable
-          innerRef={inputRef}
-          html={text.current}
-          disabled={false}
-          onChange={onChange}
-          tagName="p"
-          onKeyDown={onKeyDown}
-          onBlur={onBlur}
-        />
-      </div>
+      <ContentEditable
+        className="-inp"
+        innerRef={inputRef}
+        html={text.current}
+        disabled={false}
+        onChange={onChange}
+        tagName="p"
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+      />
     </div>
   )
 }

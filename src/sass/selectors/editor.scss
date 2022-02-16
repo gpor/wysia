@@ -5,7 +5,7 @@
 .editor {
     max-width: 750px;
     .-input-container {
-        background-color: #333;
+        // background-color: #333;
         color: #fff;
         .element {
             display: flex;
@@ -17,7 +17,8 @@
                 padding: 0 7px;
                 cursor: pointer;
                 user-select: none;
-                transition: background-color 0.2s linear;
+                transition: opacity 0.2s linear;
+                opacity: 0.4;
                 p {
                     margin: 0;
                     opacity: 0.5;
@@ -25,39 +26,41 @@
                     line-height: 0.5;
                     position: relative;
                     top: 10px;
+                    font-size: 14px;
+                    text-transform: uppercase;
                 }
                 &:hover {
-                    // background-color: #5e6e73;
+                    opacity: 1;
                     p {
                         opacity: 1;
                     }
                 }
             }
-            .-input {
+            .-inp {
                 padding: 2px 7px;
                 width: 100%;
                 flex: 0 1 auto;
                 p {
-                    margin: 0;
-                    white-space: pre-wrap;
-                    &:focus {
-                        outline: none;
-                    }
+                }
+                margin: 0;
+                white-space: pre-wrap;
+                &:focus {
+                    outline: none;
                 }
             }
             &.-h2 {
-                // .-input {
-                    p {
+                p.-inp {
+                    // p {
                         @include h2;
-                    }
-                // }
+                    // }
+                }
             }
             &.-h3 {
-                // .-input {
-                    p {
+                p.-inp {
+                    // p {
                         @include h3;
-                    }
-                // }
+                    // }
+                }
             }
             &.-p {
                 .-input { 
