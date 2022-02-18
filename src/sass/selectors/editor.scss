@@ -1,11 +1,10 @@
-@use '../mixins/agnostic/misc.scss' as *;
-@use '../mixins/project/typography.scss' as *;
-@use '../mixins/project/editor.scss' as *;
+@use '../agnostic/misc.scss' as *;
+@use '../project-no-select/typography.scss' as *;
+@use '../project-no-select/editor.scss' as *;
 
 .editor {
     max-width: 750px;
     .-input-container {
-        color: #fff;
         .element {
             display: flex;
             .-gutter {
@@ -27,6 +26,7 @@
                     font-size: 16px;
                     font-weight: 600;
                     text-transform: uppercase;
+                    color: #fff;
                 }
                 &:hover {
                     opacity: 1;

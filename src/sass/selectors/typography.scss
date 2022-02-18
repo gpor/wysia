@@ -1,5 +1,6 @@
-@use '../mixins/agnostic/misc.scss' as *;
-@use '../mixins/project/typography.scss' as *;
+@use '../agnostic/misc.scss' as *;
+@use '../project-no-select/typography.scss' as *;
+
 
 body {
     color: #222;

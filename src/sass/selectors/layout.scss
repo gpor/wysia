@@ -1,11 +1,11 @@
+@use '../project-no-select/colors.scss' as *;
 
 body {
-    background-color: #eee;
-    padding-top: 10vh;
-    @media (prefers-color-scheme: dark) {
-        background-color: #222;
-    }
     background-color: #222;
+    padding-top: 10vh;
+    @include light-theme {
+        background-color: #fff;
+    }
 }
 
 .center-frame {
