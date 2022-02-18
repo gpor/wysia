@@ -18,7 +18,8 @@
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "plop": "plop"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "eslint": "^8.8.0",
-    "eslint-plugin-react": "^7.28.0"
+    "eslint-plugin-react": "^7.28.0",
+    "plop": "^3.0.5"
   }
 }

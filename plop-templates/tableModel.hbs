@@ -1,0 +1,26 @@
+import { Row, Table } from "../lib/model";
+
+
+
+class {{ properCase tableName }} extends Table {
+  _newRow(props) {
+    return new {{ properCase rowName }}(props);
+  }
+}
+
+class {{ properCase rowName }} extends Row {
+  props() {
+    return [
+      {
+        name: 'id',
+      },
+      // {
+      //   name: 'name',
+      //   save: false,
+      // },
+    ]
+  }
+}
+
+
+export default {{ properCase tableName }}
