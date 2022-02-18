@@ -61,6 +61,9 @@ class Content {
 
 
 const initContent = (focusI) => {
+  /*
+  todo query elements from a database?
+  */
   return new Content({ elements: dummyElements, focusI })
 }
 
