@@ -34,11 +34,11 @@ function Editor() {
     <div className="flex-end">
       <div className="editor">
         <div className="-input-container">
-          {content.elements.map((element, i) => (
+          {elements.map((element, i) => (
             <Element
               key={element.id}
               elementI={i}
-              value={element.value}
+              content={element.content}
               tagName={element.tagName}
               toNext={toNext}
               insertBeneath={insertBeneath}
