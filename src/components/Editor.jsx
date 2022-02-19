@@ -1,9 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import EditorContext from '../context/EditorContext';
 import { initContent } from '../lib/content';
 import { tagNames } from '../lib/elements.js'
 import Element from './editor/Element';
 
 function Editor() {
+  const { elements } = useContext(EditorContext)
+  
+  /*
+  todo
+  replace all below (was using Content instance)
+  with elements above
+  in EditorReducers, use new Elements table to instantiate Element objects
+   - use elementsTable.dummyElements()
+  */
   const [content, setContent] = useState(initContent(1))
   const toNext = () => {
     console.log('toNext') /* todo */

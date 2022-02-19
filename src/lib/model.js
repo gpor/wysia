@@ -2,51 +2,30 @@
 
 
 class Table {
-  constructor(colProps) {
+  constructor() {
     this.rows = []
-    this.colIndex = []
-    this.cols = colProps.map(cp => new Column(cp, this))
-    this.magicRowMethods = {
-      set(target, name, value, receiver) {
-        if (!Reflect.has(target, name)) {
-          console.log(`Setting non-existent property '${name}', initial value: ${value}`);
-        }
-        return Reflect.set(target, name, value, receiver);
-      },
-    }
   }
-  newRow(data = {}) {
-    return new Proxy(this._newRow(this, data), this.magicRowMethods)
-  }
-  hasProp(pName) {
-    return this.colProps.find(p => p.name === pName)
+  new(data = {}) {
+    const row = this._new(data)
+    row.table = this
+    this.rows.push(row)
+    return row
   }
 }
 
-
-class Column {
-  constructor(props, table) {
-    this.table = table
-    this.name = props.name
-    this.save = true
-    // todo - this.type = props.type
-    if (this.name) {
-      table.colIndex.push(this.name)
-    } else {
-      console.error('missing column name', props)
-    }
-  }
-}
 
 
 class Row {
-  constructor(table, data) {
-    this.table = table
-    this.fill(data)
+  constructor(data = {}) {
+    this.table = null
   }
   fill(data) {
     for (let pName in data) {
-      this[pName] = data[pName]
+      if (Object.prototype.hasOwnProperty.call(this, pName)) {
+        this[pName] = data[pName]
+      } else {
+        console.error('no property '+pName+ ' in:', this)
+      }
     }
   }
 }

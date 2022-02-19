@@ -17,6 +17,6 @@ ReactDOM.render(
 reportWebVitals();
 
 
-const elements = new Elements
-const element = elements.newRow()
-console.log(element)
+// const elements = new Elements
+// const element = elements.new()
+// console.log(element)

@@ -3,23 +3,15 @@ import { Row, Table } from "../lib/model";
 
 
 class {{ properCase tableName }} extends Table {
-  _newRow(props) {
-    return new {{ properCase rowName }}(props);
+  _new(data) {
+    return new {{ properCase rowName }}(data);
   }
 }
 
 class {{ properCase rowName }} extends Row {
-  props() {
-    return [
-      {
-        name: 'id',
-      },
-      // {
-      //   name: 'name',
-      //   save: false,
-      // },
-    ]
-  }
+  constructor(data) {
+    super(data)
+    this.fill(data)
 }
 
 

@@ -3,8 +3,8 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 import PropTypes from 'prop-types';
 import { tagNames, splitAtRange } from '../../lib/elements.js'
 
-function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused = false }) {
-  const text = useRef(value)
+function Editable({ elementI, content, tagName, toNext, insertBeneath, isFocused = false }) {
+  const text = useRef(content)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const tagIRef = useRef(tagI)
   const inputRef = useRef()
@@ -106,7 +106,7 @@ function Editable({ elementI, value, tagName, toNext, insertBeneath, isFocused =
 
 Editable.propTypes = {
   elementI: PropTypes.number,
-  value: PropTypes.string,
+  content: PropTypes.string,
   tagName: PropTypes.string,
   toNext: PropTypes.func,
   insertBeneath: PropTypes.func,
