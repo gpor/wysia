@@ -3,14 +3,8 @@ import { Row, Table } from "../lib/model";
 
 
 class Elements extends Table {
-  _newRow(props) {
-    return new Element(props);
-  }
-}
-
-class Element extends Row {
-  props() {
-    return [
+  constructor() {
+    super([
       {
         name: 'tagName',
       },
@@ -24,8 +18,14 @@ class Element extends Row {
         name: 'isFocused',
         save: false,
       },
-    ]
+    ])
   }
+  _newRow(data) {
+    return new Element(data);
+  }
+}
+
+class Element extends Row {
 }
 
 
