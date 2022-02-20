@@ -14,7 +14,7 @@ function Editor() {
   in EditorReducers, use new Elements table to instantiate Element objects
    - use elementsTable.dummyElements()
   */
-  const [content, setContent] = useState(initContent(1))
+  // const [content, setContent] = useState(initContent(1))
   const toNext = () => {
     console.log('toNext') /* todo */
   }
@@ -22,13 +22,13 @@ function Editor() {
     console.log('tagI', tagI)
     console.log('hasRight', hasRight)
     console.log('(tagI && ! hasRight)', (tagI && ! hasRight))
-    setContent(content => {
-      return content.insertElement(elementI, htmlLeft, {
-        tagName: (tagI && ! hasRight) ? tagNames[tagI - 1] : tagNames[tagI],
-        value: htmlRight,
-        isFocused: true,
-      })
-    })
+    // setContent(content => {
+    //   return content.insertElement(elementI, htmlLeft, {
+    //     tagName: (tagI && ! hasRight) ? tagNames[tagI - 1] : tagNames[tagI],
+    //     value: htmlRight,
+    //     isFocused: true,
+    //   })
+    // })
   }
   return (
     <div className="flex-end">
