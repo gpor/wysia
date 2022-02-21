@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import EditorContext from '../context/EditorContext';
-// import { initContent } from '../lib/content';
 import { tagNames } from '../lib/elements.js'
 import Element from './editor/Element';
 
