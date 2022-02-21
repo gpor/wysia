@@ -1,12 +1,15 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import EditorContext from '../context/EditorContext';
-import { initContent } from '../lib/content';
+// import { initContent } from '../lib/content';
 import { tagNames } from '../lib/elements.js'
 import Element from './editor/Element';
 
 function Editor() {
-  const { elements } = useContext(EditorContext)
+  const { elements, elementsTable, dispatch } = useContext(EditorContext)
   
+  useEffect(() => {
+    dispatch({ type: 'SET_ELEMENTS', payload: elementsTable.dummyElements() })
+  }, [])
   /*
   todo
   replace all below (was using Content instance)

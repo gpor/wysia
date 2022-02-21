@@ -10,7 +10,8 @@ console.log('in EditorContext.jsx elementsTable', elementsTable)
 // eslint-disable-next-line react/prop-types
 export const EditorProvider = ({ children }) => {
   const initialState = {
-    elements: elementsTable.dummyElements(),
+    elementsTable,
+    elements: [],
   }
 
   const [state, dispatch] = useReducer(editorReducer, initialState)
