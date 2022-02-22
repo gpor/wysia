@@ -9,6 +9,14 @@ const githubReducer = (state, action) => {
         ...state,
         elements: action.payload,
       }
+    case 'SET_TAG_I':
+      // console.log('elI', action.elI)
+      // console.log('payload', action.payload)
+      // console.log('element', state.elements[action.elI])
+      state.elements[action.elI].tagI = action.payload
+      return {
+        ...state,
+      }
     // case 'GET_USER_AND_REPOS':
     //   return {
     //     ...state,

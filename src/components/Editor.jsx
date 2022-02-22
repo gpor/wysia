@@ -39,10 +39,7 @@ function Editor() {
           {elements.map((element, i) => (
             <Element
               key={element.id}
-              elementI={i}
-              element={element}
-              content={element.content}
-              tagName={element.tagName}
+              elI={i}
               toNext={toNext}
               insertBeneath={insertBeneath}
               isFocused={element.isFocused}

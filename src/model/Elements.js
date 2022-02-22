@@ -47,9 +47,20 @@ class Element extends Row {
     this.isFocused = false
     this.fill(data)
     this.tagI = tagNames.findIndex(name => name === this.tagName) ?? 0
+    console.log('construct', this.tagI)
   }
   tag() {
     return tagNames[this.tagI]
+  }
+  tagCanGoUp() {
+    return this.tagI < tagNames.length - 1
+  }
+  tagCanGoDown() {
+    return this.tagI > 0
+  }
+  tagAdd(d) {
+    this.tagI = this.tagI + d
+    console.log('tagCycle', d, this.tagI)
   }
 }
 

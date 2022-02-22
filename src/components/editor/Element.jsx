@@ -1,20 +1,19 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/package/react-contenteditable
 import PropTypes from 'prop-types';
-import { tagNames, splitAtRange } from '../../lib/elements.js'
+import { splitAtRange } from '../../lib/elements.js'
+import EditorContext from '../../context/EditorContext.jsx';
 
-function Editable({ elementI, element, content, tagName, toNext, insertBeneath, isFocused = false }) {
-  const text = useRef(element.content)
-  const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
-  const tagIRef = useRef(tagI)
+function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
+  
+  const { elements, dispatch } = useContext(EditorContext)
+  
+  const text = useRef(elements[elI].content)
+  const tagIRef = useRef(elements[elI].tagI)
   const inputRef = useRef()
-  const setTagI = (newTagI) => {
-    tagIRef.current = newTagI
-    _setTagI(newTagI)
-  }
   
   useEffect(() => {
-    console.log('element', element)
+    console.log('element', elements[elI])
     if (isFocused) {
       inputRef.current.focus()
     }
@@ -26,21 +25,30 @@ function Editable({ elementI, element, content, tagName, toNext, insertBeneath, 
   
   const split = ({ left , right, hasRight }) => {
     console.log('gonna split - current tagIRef', tagIRef.current)
-    insertBeneath(elementI, tagIRef.current, left.innerHTML, right.innerHTML, hasRight)
+    insertBeneath(elI, tagIRef.current, left.innerHTML, right.innerHTML, hasRight)
   }
 
   const onKeyDown = (e) => {
     let newTagI = null;
     // console.log('e.key', e.key, e.shiftKey)
     if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowUp') {
-      if (tagIRef.current < tagNames.length - 1) {
-        newTagI = tagIRef.current + 1
+      e.preventDefault();
+      if (elements[elI].tagCanGoUp()) {
+        dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI + 1 })
+        // elements[elI].tagAdd(1)
       }
+      // if (tagIRef.current < tagNames.length - 1) {
+      //   newTagI = tagIRef.current + 1
+      // }
     } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowDown') {
       e.preventDefault();
-      if (tagIRef.current > 0) {
-        newTagI = tagIRef.current - 1
+      if (elements[elI].tagCanGoDown()) {
+        dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI - 1 })
+        // elements[elI].tagAdd(-1)
       }
+      // if (tagIRef.current > 0) {
+      //   newTagI = tagIRef.current - 1
+      // }
     } else if (e.shiftKey && e.key === 'Enter') {
       // todo
       // allow normal Enter behaivor
@@ -69,7 +77,7 @@ function Editable({ elementI, element, content, tagName, toNext, insertBeneath, 
   
     }
     if (newTagI !== null) {
-      setTagI(newTagI)
+      // setTagI(newTagI)
     }
     newTagI = null
   }
@@ -80,16 +88,16 @@ function Editable({ elementI, element, content, tagName, toNext, insertBeneath, 
   
   const cycleTag = (e) => {
     /* todo - drop-down menu of elements */
-    setTagI((tagIRef.current + 1) % tagNames.length);
+    // setTagI((tagIRef.current + 1) % tagNames.length);
   }
   
   return (
-    <div className={`element -${element.tag()}`}>
+    <div className={`element -${elements[elI].tag()}`}>
       <div
         className="-gutter"
         onClick={cycleTag}
       >
-        <p>{tagNames[tagIRef.current]}</p>
+        <p>{elements[elI].tag()}</p>
       </div>
       <ContentEditable
         className="-inp"
@@ -106,10 +114,7 @@ function Editable({ elementI, element, content, tagName, toNext, insertBeneath, 
 }
 
 Editable.propTypes = {
-  elementI: PropTypes.number,
-  element: PropTypes.object,
-  content: PropTypes.string,
-  tagName: PropTypes.string,
+  elI: PropTypes.number,
   toNext: PropTypes.func,
   insertBeneath: PropTypes.func,
   isFocused: PropTypes.bool,
