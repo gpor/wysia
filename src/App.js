@@ -1,7 +1,6 @@
 import './sass/app.scss';
 import Editor from './components/Editor';
 import { EditorProvider } from './context/EditorContext';
-// import Foo from './pages/Foo.jsx'
 
 function App() {
   return (
