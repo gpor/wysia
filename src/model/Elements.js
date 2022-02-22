@@ -23,6 +23,7 @@ const dummyElements = [
   },
 ]
 
+const tagNames = ['p', 'h3', 'h2']
 
 class Elements extends Table {
   _new(data) {
@@ -41,11 +42,14 @@ class Element extends Row {
   constructor(data) {
     super(data)
     this.id = 0
-    this.tagName = ''
+    this.tagName = '' // set once, don't access after instantiation. use tag()
     this.content = '' // was value
     this.isFocused = false
-    this.fill(data) /* todo - must go in plop template */
-    
+    this.fill(data)
+    this.tagI = tagNames.findIndex(name => name === this.tagName) ?? 0
+  }
+  tag() {
+    return tagNames[this.tagI]
   }
 }
 

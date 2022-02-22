@@ -40,6 +40,7 @@ function Editor() {
             <Element
               key={element.id}
               elementI={i}
+              element={element}
               content={element.content}
               tagName={element.tagName}
               toNext={toNext}

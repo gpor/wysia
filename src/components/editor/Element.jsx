@@ -3,8 +3,8 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 import PropTypes from 'prop-types';
 import { tagNames, splitAtRange } from '../../lib/elements.js'
 
-function Editable({ elementI, content, tagName, toNext, insertBeneath, isFocused = false }) {
-  const text = useRef(content)
+function Editable({ elementI, element, content, tagName, toNext, insertBeneath, isFocused = false }) {
+  const text = useRef(element.content)
   const [tagI, _setTagI] = useState(tagNames.findIndex(name => name === tagName) ?? 0)
   const tagIRef = useRef(tagI)
   const inputRef = useRef()
@@ -14,6 +14,7 @@ function Editable({ elementI, content, tagName, toNext, insertBeneath, isFocused
   }
   
   useEffect(() => {
+    console.log('element', element)
     if (isFocused) {
       inputRef.current.focus()
     }
@@ -83,7 +84,7 @@ function Editable({ elementI, content, tagName, toNext, insertBeneath, isFocused
   }
   
   return (
-    <div className={`element -${tagNames[tagIRef.current]}`}>
+    <div className={`element -${element.tag()}`}>
       <div
         className="-gutter"
         onClick={cycleTag}
@@ -106,6 +107,7 @@ function Editable({ elementI, content, tagName, toNext, insertBeneath, isFocused
 
 Editable.propTypes = {
   elementI: PropTypes.number,
+  element: PropTypes.object,
   content: PropTypes.string,
   tagName: PropTypes.string,
   toNext: PropTypes.func,
