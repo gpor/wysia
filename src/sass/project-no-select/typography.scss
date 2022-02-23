@@ -23,7 +23,7 @@
     }
 }
 @mixin h3 {
-    @include clamp(19, 27);
+    @include clamp(18, 25);
     @include clamp(9, 14, 'margin-bottom');
     @include text-color;
     line-height: 1.3;
