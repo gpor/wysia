@@ -49,8 +49,7 @@ const splitHtml = (br) => {
 }
 const splitAtRange = (range) => {
   const br = document.createElement('br');
-  console.log('splitter br')
-  console.log(br)
+  console.log('splitter br', br)
   range.insertNode(br)
   return splitHtml(br);
 }

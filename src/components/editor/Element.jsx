@@ -24,8 +24,11 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
   }
   
   const split = ({ left , right, hasRight }) => {
-    console.log('gonna split - current tagIRef', tagIRef.current)
-    insertBeneath(elI, tagIRef.current, left.innerHTML, right.innerHTML, hasRight)
+    console.log('gonna split - current tagIRef', elements[elI].tagI)
+    console.log('left', left)
+    console.log('right', right)
+    console.log('hasRight', hasRight)
+    insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
   }
 
   const onKeyDown = (e) => {
