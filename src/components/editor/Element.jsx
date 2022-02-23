@@ -95,24 +95,16 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
   }
   
   return (
-    <div className={`element -${elements[elI].tag()}`}>
-      <div
-        className="-gutter"
-        onClick={cycleTag}
-      >
-        <p>{elements[elI].tag()}</p>
-      </div>
-      <ContentEditable
-        className="-inp"
-        innerRef={inputRef}
-        html={text.current}
-        disabled={false}
-        onChange={onChange}
-        tagName="p"
-        onKeyDown={onKeyDown}
-        onBlur={onBlur}
-      />
-    </div>
+    <ContentEditable
+      className={`element -${elements[elI].tag()}`}
+      innerRef={inputRef}
+      html={text.current}
+      disabled={false}
+      onChange={onChange}
+      tagName="p"
+      onKeyDown={onKeyDown}
+      onBlur={onBlur}
+    />
   )
 }
 
