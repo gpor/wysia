@@ -17,6 +17,14 @@ const githubReducer = (state, action) => {
       return {
         ...state,
       }
+    case 'UPDATE_CONTENT':
+      // console.log('elI', action.elI)
+      // console.log('payload', action.payload)
+      // console.log('element', state.elements[action.elI])
+      state.elements[action.elI].content = action.payload
+      return {
+        ...state,
+      }
     // case 'GET_USER_AND_REPOS':
     //   return {
     //     ...state,
@@ -35,6 +43,7 @@ const githubReducer = (state, action) => {
     //     users: [],
     //   }
     default:
+      console.error('no action type', action.type)
       return state
   }
 }

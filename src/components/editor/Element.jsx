@@ -8,8 +8,6 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
   
   const { elements, dispatch } = useContext(EditorContext)
   
-  const text = useRef(elements[elI].content)
-  const tagIRef = useRef(elements[elI].tagI)
   const inputRef = useRef()
   
   useEffect(() => {
@@ -20,16 +18,9 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
   }, [])
 
   const onChange = (e) => {
-    text.current = inputRef.current.innerHTML;
+    dispatch({ type: 'UPDATE_CONTENT', elI, payload: inputRef.current.innerHTML })
   }
   
-  const split = ({ left , right, hasRight }) => {
-    console.log('gonna split - current tagIRef', elements[elI].tagI)
-    console.log('left', left)
-    console.log('right', right)
-    console.log('hasRight', hasRight)
-    insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
-  }
 
   const onKeyDown = (e) => {
     let newTagI = null;
@@ -68,14 +59,23 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
       
       
     } else if (e.key === 'Enter') {
-      const range = document.getSelection().getRangeAt(0)
-      split(splitAtRange(range))
       e.preventDefault();
+      
+      const range = document.getSelection().getRangeAt(0)
+      const { left , right, hasRight } = splitAtRange(range)
+      insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
+      /*
+      
+      todo
+      insertBeneath comes from Editor.jsx
+      probably put it in context somewhere
+      
+      */
       
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      inputRef.current.innerHTML = '&#09;' + text.current
+      inputRef.current.innerHTML = '&#09;' + elements[elI].content
       onChange()
   
     }
@@ -98,7 +98,7 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
     <ContentEditable
       className={`element -${elements[elI].tag()}`}
       innerRef={inputRef}
-      html={text.current}
+      html={elements[elI].content}
       disabled={false}
       onChange={onChange}
       tagName="p"
