@@ -1,4 +1,5 @@
 import { Row, Table } from "../lib/model";
+import { v4 as uuidv4 } from 'uuid'
 
 const dummyElements = [
   {
@@ -25,7 +26,7 @@ const dummyElements = [
 
 const tagNames = ['p', 'h3', 'h2']
 
-class Elements extends Table {
+class ElementsTable extends Table {
   _new(data) {
     return new Element(data);
   }
@@ -41,13 +42,12 @@ class Elements extends Table {
 class Element extends Row {
   constructor(data) {
     super(data)
-    this.id = 0
+    this.id = data.id || uuidv4()
     this.tagName = '' // set once, don't access after instantiation. use tag()
     this.content = '' // was value
     this.isFocused = false
     this.fill(data)
     this.tagI = tagNames.findIndex(name => name === this.tagName) ?? 0
-    console.log('construct', this.tagI)
   }
   tag() {
     return tagNames[this.tagI]
@@ -58,11 +58,7 @@ class Element extends Row {
   tagCanGoDown() {
     return this.tagI > 0
   }
-  tagAdd(d) {
-    this.tagI = this.tagI + d
-    console.log('tagCycle', d, this.tagI)
-  }
 }
 
 
-export default Elements
+export default ElementsTable

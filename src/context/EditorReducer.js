@@ -1,6 +1,22 @@
-import Elements from "../model/Elements" /* todo - here or context? */
 
-
+function newElements(prevEls, insertI, newEl, func = null) {
+  const els = []
+  prevEls.forEach((el, i)=>{
+    console.log('i', i)
+    if (func && insertI === i) {
+      els.push(func(el, i));
+    } else {
+      els.push(el);
+    }
+    if (insertI === i) {
+      console.log('insertI', newEl.content)
+      els.push(newEl)
+    }
+  })
+  console.log(' ')
+  console.log(' ')
+  return els
+}
 
 const githubReducer = (state, action) => {
   switch (action.type) {
@@ -10,38 +26,39 @@ const githubReducer = (state, action) => {
         elements: action.payload,
       }
     case 'SET_TAG_I':
-      // console.log('elI', action.elI)
-      // console.log('payload', action.payload)
-      // console.log('element', state.elements[action.elI])
       state.elements[action.elI].tagI = action.payload
       return {
         ...state,
       }
     case 'UPDATE_CONTENT':
-      // console.log('elI', action.elI)
-      // console.log('payload', action.payload)
-      // console.log('element', state.elements[action.elI])
-      state.elements[action.elI].content = action.payload
+      state.elements[action.elI].content = action.content
       return {
         ...state,
       }
-    // case 'GET_USER_AND_REPOS':
-    //   return {
-    //     ...state,
-    //     user: action.payload.user,
-    //     repos: action.payload.repos,
-    //     loading: false,
-    //   }
-    // case 'SET_LOADING':
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   }
-    // case 'CLEAR_USERS':
-    //   return {
-    //     ...state,
-    //     users: [],
-    //   }
+    case 'ADD_ELEMENT_BELOW':
+      return {
+        ...state,
+        elements: newElements(
+          state.elements,
+          action.elI,
+          action.newEl
+        ),
+      }
+    case 'UPDATE_CONTENT_AND_ADD_ELEMENT_BELOW':
+      return {
+        ...state,
+        elements: newElements(
+          state.elements,
+          action.elI,
+          action.newEl,
+          (el, i) => {
+            console.log('from ___', el.content)
+            el.content = action.content
+            console.log('to ____', el.content)
+            return el
+          }
+        ),
+      }
     default:
       console.error('no action type', action.type)
       return state

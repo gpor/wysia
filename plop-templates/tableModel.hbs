@@ -1,8 +1,9 @@
 import { Row, Table } from "../lib/model";
+import { v4 as uuidv4 } from 'uuid'
 
 
 
-class {{ properCase tableName }} extends Table {
+class {{ properCase tableName }}Table extends Table {
   _new(data) {
     return new {{ properCase rowName }}(data);
   }
@@ -11,6 +12,7 @@ class {{ properCase tableName }} extends Table {
 class {{ properCase rowName }} extends Row {
   constructor(data) {
     super(data)
+    this.id = data.id || uuidv4()
     this.fill(data)
 }
 

@@ -1,16 +1,13 @@
 import { createContext, useReducer } from 'react'
 import editorReducer from './EditorReducer'
-import Elements from "../model/Elements" /* todo - here or reducer? */
+import ElementsTable from "../model/Elements"
+import PropTypes from 'prop-types';
 
 const EditorContext = createContext()
 
-const elementsTable = new Elements
-console.log('in EditorContext.jsx elementsTable', elementsTable)
-
-// eslint-disable-next-line react/prop-types
 export const EditorProvider = ({ children }) => {
   const initialState = {
-    elementsTable,
+    elementsTable: new ElementsTable,
     elements: [],
   }
 
@@ -27,5 +24,11 @@ export const EditorProvider = ({ children }) => {
     </EditorContext.Provider>
   )
 }
+
+EditorProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+
 
 export default EditorContext

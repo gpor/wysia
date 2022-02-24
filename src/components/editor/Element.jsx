@@ -1,24 +1,23 @@
 import { useState, useRef, useEffect, useContext } from 'react'
 import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/package/react-contenteditable
 import PropTypes from 'prop-types';
-import { splitAtRange } from '../../lib/elements.js'
+import splitAtRange from '../../actions/splitAtRange.js'
 import EditorContext from '../../context/EditorContext.jsx';
 
-function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
+function Editable({ elI, toNext, isFocused = false }) {
   
-  const { elements, dispatch } = useContext(EditorContext)
+  const { elements, elementsTable, dispatch } = useContext(EditorContext)
   
   const inputRef = useRef()
   
   useEffect(() => {
-    console.log('element', elements[elI])
     if (isFocused) {
       inputRef.current.focus()
     }
   }, [])
 
   const onChange = (e) => {
-    dispatch({ type: 'UPDATE_CONTENT', elI, payload: inputRef.current.innerHTML })
+    dispatch({ type: 'UPDATE_CONTENT', elI, content: inputRef.current.innerHTML })
   }
   
 
@@ -29,20 +28,12 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
       e.preventDefault();
       if (elements[elI].tagCanGoUp()) {
         dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI + 1 })
-        // elements[elI].tagAdd(1)
       }
-      // if (tagIRef.current < tagNames.length - 1) {
-      //   newTagI = tagIRef.current + 1
-      // }
     } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowDown') {
       e.preventDefault();
       if (elements[elI].tagCanGoDown()) {
         dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI - 1 })
-        // elements[elI].tagAdd(-1)
       }
-      // if (tagIRef.current > 0) {
-      //   newTagI = tagIRef.current - 1
-      // }
     } else if (e.shiftKey && e.key === 'Enter') {
       // todo
       // allow normal Enter behaivor
@@ -63,7 +54,20 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
       
       const range = document.getSelection().getRangeAt(0)
       const { left , right, hasRight } = splitAtRange(range)
-      insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
+      
+      const newEl = elementsTable.new({
+        tagName: 'p',
+        content: right.innerHTML,
+        isFocused: true,
+      })
+      dispatch({
+        type: 'UPDATE_CONTENT_AND_ADD_ELEMENT_BELOW',
+        elI,
+        newEl,
+        content: left.innerHTML,
+      })
+      console.log('elements', elements)
+      // insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
       /*
       
       todo
@@ -75,7 +79,7 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      inputRef.current.innerHTML = '&#09;' + elements[elI].content
+      inputRef.current.innerHTML = '&#09;' + elements[elI].content /* todo - should insert */
       onChange()
   
     }
@@ -111,7 +115,6 @@ function Editable({ elI, toNext, insertBeneath, isFocused = false }) {
 Editable.propTypes = {
   elI: PropTypes.number,
   toNext: PropTypes.func,
-  insertBeneath: PropTypes.func,
   isFocused: PropTypes.bool,
 }
 
