@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import splitAtRange from '../../actions/splitAtRange.js'
 import EditorContext from '../../context/EditorContext.jsx';
 
-function Editable({ elI, toNext, isFocused = false }) {
+function Editable({ elI, element, toNext, isFocused = false }) {
   
   const { elements, elementsTable, dispatch } = useContext(EditorContext)
   
@@ -26,13 +26,13 @@ function Editable({ elI, toNext, isFocused = false }) {
     // console.log('e.key', e.key, e.shiftKey)
     if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowUp') {
       e.preventDefault();
-      if (elements[elI].tagCanGoUp()) {
-        dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI + 1 })
+      if (element.tagCanGoUp()) {
+        dispatch({ type: 'SET_TAG_I', elI, payload: element.tagI + 1 })
       }
     } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowDown') {
       e.preventDefault();
-      if (elements[elI].tagCanGoDown()) {
-        dispatch({ type: 'SET_TAG_I', elI, payload: elements[elI].tagI - 1 })
+      if (element.tagCanGoDown()) {
+        dispatch({ type: 'SET_TAG_I', elI, payload: element.tagI - 1 })
       }
     } else if (e.shiftKey && e.key === 'Enter') {
       // todo
@@ -67,7 +67,7 @@ function Editable({ elI, toNext, isFocused = false }) {
         content: left.innerHTML,
       })
       // console.log('elements', elements)
-      // insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
+      // insertBeneath(elI, element.tagI, left.innerHTML, right.innerHTML, hasRight)
       /*
       
       todo
@@ -79,7 +79,7 @@ function Editable({ elI, toNext, isFocused = false }) {
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      inputRef.current.innerHTML = '&#09;' + elements[elI].content /* todo - should insert */
+      inputRef.current.innerHTML = '&#09;' + element.content /* todo - should insert */
       onChange()
   
     }
@@ -100,9 +100,9 @@ function Editable({ elI, toNext, isFocused = false }) {
   
   return (
     <ContentEditable
-      className={`element -${elements[elI].tag()}`}
+      className={`element -${element.tag()}`}
       innerRef={inputRef}
-      html={elements[elI].content}
+      html={element.content}
       disabled={false}
       onChange={onChange}
       tagName="p"
@@ -114,6 +114,7 @@ function Editable({ elI, toNext, isFocused = false }) {
 
 Editable.propTypes = {
   elI: PropTypes.number,
+  element: PropTypes.object,
   toNext: PropTypes.func,
   isFocused: PropTypes.bool,
 }

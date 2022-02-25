@@ -26,6 +26,7 @@ function Editor() {
           {elements.map((element, i) => (
             <Element
               key={element.id}
+              element={element}
               elI={i}
               toNext={toNext}
               isFocused={element.isFocused}
