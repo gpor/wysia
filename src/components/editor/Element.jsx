@@ -66,7 +66,7 @@ function Editable({ elI, toNext, isFocused = false }) {
         newEl,
         content: left.innerHTML,
       })
-      console.log('elements', elements)
+      // console.log('elements', elements)
       // insertBeneath(elI, elements[elI].tagI, left.innerHTML, right.innerHTML, hasRight)
       /*
       
