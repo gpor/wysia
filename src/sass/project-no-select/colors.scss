@@ -2,8 +2,8 @@
 @mixin light-theme {
     /* enable light theme by changing to 'prefers-color-scheme: light' */
     @media (prefers-color-scheme: light-foo) {
-        @content;
     }
+    @content;
 }
 
 
