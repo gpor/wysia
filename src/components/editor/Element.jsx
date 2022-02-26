@@ -3,6 +3,7 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 import PropTypes from 'prop-types';
 import splitAtRange from '../../actions/splitAtRange.js'
 import EditorContext from '../../context/EditorContext.jsx';
+import { cursorDown, cursorUp, enterInsertBelowAction } from '../../lib/caretFuncs.js';
 
 function Editable({ element, toNext, isFocused = false }) {
   
@@ -35,37 +36,22 @@ function Editable({ element, toNext, isFocused = false }) {
         dispatch({ type: 'SET_TAG_I', elI: element.i, payload: element.tagI - 1 })
       }
     } else if (e.shiftKey && e.key === 'Enter') {
-      // todo
       // allow normal Enter behaivor
-      
-      
     } else if (e.key === 'ArrowUp') {
       // todo
-      // 
-      
+      console.log('up here')
+      // e.preventDefault()
+      cursorUp()
       
     } else if (e.key === 'ArrowDown') {
       // todo
-      
+      console.log('down here')
+      cursorDown()
       
       
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      
-      const range = document.getSelection().getRangeAt(0)
-      const { left , right, hasRight } = splitAtRange(range)
-      
-      const newEl = elementsTable.new({
-        tagName: 'p',
-        content: right.innerHTML,
-        isFocused: true,
-      })
-      dispatch({
-        type: 'UPDATE_CONTENT_AND_ADD_ELEMENT_BELOW',
-        elI: element.i,
-        newEl,
-        content: left.innerHTML,
-      })
+      dispatch(enterInsertBelowAction(elementsTable, element, dispatch))
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
