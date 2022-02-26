@@ -2,19 +2,21 @@
 function newElements(prevEls, insertI, newEl, func = null) {
   const els = []
   prevEls.forEach((el, i)=>{
-    console.log('i', i)
+    // console.log('i', i)
+    el.i = els.length
     if (func && insertI === i) {
       els.push(func(el, i));
     } else {
       els.push(el);
     }
     if (insertI === i) {
-      console.log('insertI', newEl.content)
+      // console.log('insertI', newEl.content)
+      newEl.i = els.length
       els.push(newEl)
     }
   })
-  console.log(' ')
-  console.log(' ')
+  // console.log(' ')
+  // console.log(' ')
   return els
 }
 
@@ -52,9 +54,9 @@ const githubReducer = (state, action) => {
           action.elI,
           action.newEl,
           (el, i) => {
-            console.log('from ___', el.content)
+            // console.log('from ___', el.content)
             el.content = action.content
-            console.log('to ____', el.content)
+            // console.log('to ____', el.content)
             return el
           }
         ),

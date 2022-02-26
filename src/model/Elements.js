@@ -32,8 +32,10 @@ class ElementsTable extends Table {
   }
   dummyElements() {
     const elements = []
-    dummyElements.forEach(data => {
-      elements.push(this.new(data))
+    dummyElements.forEach((data, i) => {
+      const el = this.new(data);
+      el.i = i
+      elements.push(el)
     })
     return elements
   }
@@ -42,6 +44,7 @@ class ElementsTable extends Table {
 class Element extends Row {
   constructor(data) {
     super(data)
+    this.i = null
     this.id = data.id || uuidv4()
     this.tagName = '' // set once, don't access after instantiation. use tag()
     this.content = '' // was value

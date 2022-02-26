@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import splitAtRange from '../../actions/splitAtRange.js'
 import EditorContext from '../../context/EditorContext.jsx';
 
-function Editable({ elI, element, toNext, isFocused = false }) {
+function Editable({ element, toNext, isFocused = false }) {
   
   const { elements, elementsTable, dispatch } = useContext(EditorContext)
   
@@ -17,7 +17,7 @@ function Editable({ elI, element, toNext, isFocused = false }) {
   }, [])
 
   const onChange = (e) => {
-    dispatch({ type: 'UPDATE_CONTENT', elI, content: inputRef.current.innerHTML })
+    dispatch({ type: 'UPDATE_CONTENT', elI: element.i, content: inputRef.current.innerHTML })
   }
   
 
@@ -27,12 +27,12 @@ function Editable({ elI, element, toNext, isFocused = false }) {
     if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowUp') {
       e.preventDefault();
       if (element.tagCanGoUp()) {
-        dispatch({ type: 'SET_TAG_I', elI, payload: element.tagI + 1 })
+        dispatch({ type: 'SET_TAG_I', elI: element.i, payload: element.tagI + 1 })
       }
     } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowDown') {
       e.preventDefault();
       if (element.tagCanGoDown()) {
-        dispatch({ type: 'SET_TAG_I', elI, payload: element.tagI - 1 })
+        dispatch({ type: 'SET_TAG_I', elI: element.i, payload: element.tagI - 1 })
       }
     } else if (e.shiftKey && e.key === 'Enter') {
       // todo
@@ -62,20 +62,10 @@ function Editable({ elI, element, toNext, isFocused = false }) {
       })
       dispatch({
         type: 'UPDATE_CONTENT_AND_ADD_ELEMENT_BELOW',
-        elI,
+        elI: element.i,
         newEl,
         content: left.innerHTML,
       })
-      // console.log('elements', elements)
-      // insertBeneath(elI, element.tagI, left.innerHTML, right.innerHTML, hasRight)
-      /*
-      
-      todo
-      insertBeneath comes from Editor.jsx
-      probably put it in context somewhere
-      
-      */
-      
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
@@ -113,7 +103,6 @@ function Editable({ elI, element, toNext, isFocused = false }) {
 }
 
 Editable.propTypes = {
-  elI: PropTypes.number,
   element: PropTypes.object,
   toNext: PropTypes.func,
   isFocused: PropTypes.bool,

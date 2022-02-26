@@ -27,7 +27,6 @@ function Editor() {
             <Element
               key={element.id}
               element={element}
-              elI={i}
               toNext={toNext}
               isFocused={element.isFocused}
             />
