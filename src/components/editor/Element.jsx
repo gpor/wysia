@@ -3,13 +3,14 @@ import ContentEditable from 'react-contenteditable' // https://www.npmjs.com/pac
 import PropTypes from 'prop-types';
 import splitAtRange from '../../actions/splitAtRange.js'
 import EditorContext from '../../context/EditorContext.jsx';
-import { cursorDown, cursorUp, enterInsertBelowAction } from '../../actions/caretFuncs.js';
+import { cursorMoveYAction, addElementBelowAction } from '../../actions/caretFuncs.js';
 
 function Editable({ element, toNext, isFocused = false }) {
   
   const { elements, elementsTable, dispatch } = useContext(EditorContext)
   
   const inputRef = useRef()
+  element.inputRef = inputRef
   
   useEffect(() => {
     if (isFocused) {
@@ -37,19 +38,26 @@ function Editable({ element, toNext, isFocused = false }) {
       }
     } else if (e.shiftKey && e.key === 'Enter') {
       // allow normal Enter behaivor
-    } else if (e.key === 'ArrowUp') {
-      cursorUp()
-    } else if (e.key === 'ArrowDown') {
-      cursorDown()
+    } else if (e.key === 'ArrowUp' && element.i > 0) {
+      const moveToAction = cursorMoveYAction(-1, element.i)
+      if (moveToAction) {
+        e.preventDefault();
+        dispatch(moveToAction)
+      }
+    } else if (e.key === 'ArrowDown' && element.i < elements.length - 1) {
+      const moveToAction = cursorMoveYAction(1, element.i)
+      if (moveToAction) {
+        e.preventDefault();
+        dispatch(moveToAction)
+      }
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      dispatch(enterInsertBelowAction(elementsTable, element, dispatch))
+      dispatch(addElementBelowAction(elementsTable, element))
       
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      inputRef.current.innerHTML = '&#09;' + element.content /* todo - should insert */
+      document.execCommand('insertHTML', false, '&#009');
       onChange()
-  
     }
     if (newTagI !== null) {
       // setTagI(newTagI)

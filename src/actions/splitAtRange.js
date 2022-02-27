@@ -1,8 +1,8 @@
 
-const nodeTypes = ['no_nodeType','ELEMENT_NODE','ATTRIBUTE_NODE','TEXT_NODE','CDATA_SECTION_NODE','PROCESSING_INSTRUCTION_NODE','COMMENT_NODE','DOCUMENT_NODE','DOCUMENT_TYPE_NODE','DOCUMENT_FRAGMENT_NODE']
+// const nodeTypes = ['no_nodeType','ELEMENT_NODE','ATTRIBUTE_NODE','TEXT_NODE','CDATA_SECTION_NODE','PROCESSING_INSTRUCTION_NODE','COMMENT_NODE','DOCUMENT_NODE','DOCUMENT_TYPE_NODE','DOCUMENT_FRAGMENT_NODE']
 
 
-const splitHtmlRecur = (wrapper, origin, left = null, right = null, hasRight = false) => {
+const splitHtmlRecur = (wrapper, center, left = null, right = null, hasRight = false) => {
   if (wrapper === null) {
     return { left, right, hasRight }
   }
@@ -11,13 +11,13 @@ const splitHtmlRecur = (wrapper, origin, left = null, right = null, hasRight = f
   if (right !== null) {
     rn.appendChild(right)
   }
-  let leftOfInner = true
+  let isLeftOfCenter = true
   wrapper.childNodes.forEach(node => {
     // console.log(nodeTypes[node.nodeType], node)
     if (node.nodeType !== 3 || node.textContent.length > 0) {
-      if (leftOfInner) {
-        if (node.isEqualNode(origin)) {
-          leftOfInner = false;
+      if (isLeftOfCenter) {
+        if (node.isEqualNode(center)) {
+          isLeftOfCenter = false;
         } else {
           const cloned = node.cloneNode(true)
           ln.appendChild(cloned)
@@ -49,6 +49,7 @@ const splitHtml = (br) => {
 const splitAtRange = (range) => {
   const br = document.createElement('br');
   // console.log('splitter br', br)
+  range.deleteContents()
   range.insertNode(br)
   return splitHtml(br);
 }

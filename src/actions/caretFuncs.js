@@ -1,28 +1,30 @@
 import splitAtRange from "../actions/splitAtRange"
 
-function sel() {
+const sel = () => {
   return document.getSelection()
 }
 
-function range() {
+const range = () => {
   return sel().getRangeAt(0)
 }
 
 
-function cursorMoveY() {
+const cursorMoveYAction = (d, i) => {
   const s = sel()
-  console.log('sel.rangeCount', s.rangeCount)
+  if (
+    (d === 1 && s.anchorOffset === s.anchorNode.textContent.length)
+    || (d === -1 && s.anchorOffset === 0)
+  ) {
+    return {
+      type: 'FOCUS_RELATIVE_ELEMENT',
+      newElI: i + d,
+    }
+  }
 }
 
-function cursorUp() {
-  cursorMoveY()
-}
 
-function cursorDown() {
-  cursorMoveY()
-}
 
-function enterInsertBelowAction(elementsTable, element) {
+const addElementBelowAction = (elementsTable, element) => {
   const { left , right, hasRight } = splitAtRange(range())
   const newEl = elementsTable.new({
     tagName: 'p',
@@ -42,4 +44,4 @@ function enterInsertBelowAction(elementsTable, element) {
 
 
 
-export { range, cursorUp, cursorDown, enterInsertBelowAction }
+export { range, cursorMoveYAction, addElementBelowAction }

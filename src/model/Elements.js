@@ -51,6 +51,7 @@ class Element extends Row {
     this.isFocused = false
     this.fill(data)
     this.tagI = tagNames.findIndex(name => name === this.tagName) ?? 0
+    this.inputRef = null // input document node. Set in Element.jsx
   }
   tag() {
     return tagNames[this.tagI]
