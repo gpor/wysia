@@ -3,20 +3,15 @@ import Selection from '../lib/Selection'
 
 
 
-const cursorMoveYAction = (d, i, inputEl, sel) => {
-  if (sel.rect) {
-    // console.log('sel.x', sel.x())
-    // console.log('inputEl.offsetLeft', inputEl.offsetLeft)
-    // console.log('left', sel.x() - inputEl.offsetLeft)
-  }
-  if (
-    (d === 1 && sel.s.anchorOffset === sel.s.anchorNode.textContent.length)
-    || (d === -1 && sel.s.anchorOffset === 0)
-  ) {
-    return {
-      type: 'FOCUS_RELATIVE_ELEMENT',
-      newElI: i + d,
-    }
+const cursorMoveYAction = (d, i) => {
+  // if (
+  //   (d === 1 && sel.s.anchorOffset === sel.s.anchorNode.textContent.length)
+  //   || (d === -1 && sel.s.anchorOffset === 0)
+  // ) {
+  // }
+  return {
+    type: 'FOCUS_RELATIVE_ELEMENT',
+    newElI: i + d,
   }
 }
 

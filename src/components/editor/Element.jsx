@@ -42,29 +42,39 @@ function Editable({ element, toNext, isFocused = false }) {
     } else if (e.key === 'ArrowUp') {
       // console.log('caretX', caretX)
       const sel = new Selection()
-      if (sel.rect) {
-        console.log('left', sel.x() - element.inputRef.current.offsetLeft)
-      }
-      if (element.i > 0) {
-        const moveToAction = cursorMoveYAction(-1, element.i, element.inputRef.current, sel)
-        if (moveToAction) {
-          e.preventDefault();
-          dispatch(moveToAction)
+      if (sel.from('top', { element }) < 15) {
+        if (element.i > 0) {
+          const moveToAction = cursorMoveYAction(-1, element.i)
+          if (moveToAction) {
+            e.preventDefault();
+            dispatch(moveToAction)
+          }
         }
       }
+      setTimeout(()=>{
+        const sel = new Selection
+        console.log('x', sel.from('left', { element }))
+        // console.log('y', sel.from('top', { element }))
+        // console.log('fromBottom', sel.from('bottom', { element }))
+      }, 10)
     } else if (e.key === 'ArrowDown') {
       // console.log('caretX', caretX)
       const sel = new Selection()
-      if (sel.rect) {
-        console.log('left', sel.x() - element.inputRef.current.offsetLeft)
-      }
-      if (element.i < elements.length - 1) {
-        const moveToAction = cursorMoveYAction(1, element.i, element.inputRef.current, sel)
-        if (moveToAction) {
-          e.preventDefault();
-          dispatch(moveToAction)
+      if (sel.from('bottom', { element }) < 15) {
+        if (element.i < elements.length - 1) {
+          const moveToAction = cursorMoveYAction(1, element.i)
+          if (moveToAction) {
+            e.preventDefault();
+            dispatch(moveToAction)
+          }
         }
       }
+      setTimeout(()=>{
+        const sel = new Selection
+        console.log('x', sel.from('left', { element }))
+        // console.log('y', sel.from('top', { element }))
+        // console.log('fromBottom', sel.from('bottom', { element }))
+      }, 10)
     } else if (e.key === 'Enter') {
       e.preventDefault();
       dispatch(addElementBelowAction(elementsTable, element))
