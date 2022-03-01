@@ -9,6 +9,7 @@ export const EditorProvider = ({ children }) => {
   const initialState = {
     elementsTable: new ElementsTable,
     elements: [],
+    caretX: null,
   }
 
   const [state, dispatch] = useReducer(editorReducer, initialState)

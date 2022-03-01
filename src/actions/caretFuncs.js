@@ -1,19 +1,17 @@
 import splitAtRange from "../actions/splitAtRange"
-
-const sel = () => {
-  return document.getSelection()
-}
-
-const range = () => {
-  return sel().getRangeAt(0)
-}
+import Selection from '../lib/Selection'
 
 
-const cursorMoveYAction = (d, i) => {
-  const s = sel()
+
+const cursorMoveYAction = (d, i, inputEl, sel) => {
+  if (sel.rect) {
+    // console.log('sel.x', sel.x())
+    // console.log('inputEl.offsetLeft', inputEl.offsetLeft)
+    // console.log('left', sel.x() - inputEl.offsetLeft)
+  }
   if (
-    (d === 1 && s.anchorOffset === s.anchorNode.textContent.length)
-    || (d === -1 && s.anchorOffset === 0)
+    (d === 1 && sel.s.anchorOffset === sel.s.anchorNode.textContent.length)
+    || (d === -1 && sel.s.anchorOffset === 0)
   ) {
     return {
       type: 'FOCUS_RELATIVE_ELEMENT',
@@ -25,7 +23,8 @@ const cursorMoveYAction = (d, i) => {
 
 
 const addElementBelowAction = (elementsTable, element) => {
-  const { left , right, hasRight } = splitAtRange(range())
+  const sel = new Selection()
+  const { left , right, hasRight } = splitAtRange(sel.r)
   const newEl = elementsTable.new({
     tagName: 'p',
     content: right.innerHTML,
@@ -44,4 +43,4 @@ const addElementBelowAction = (elementsTable, element) => {
 
 
 
-export { range, cursorMoveYAction, addElementBelowAction }
+export { cursorMoveYAction, addElementBelowAction }

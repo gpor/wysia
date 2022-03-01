@@ -62,8 +62,6 @@ const githubReducer = (state, action) => {
         ),
       }
     case 'FOCUS_RELATIVE_ELEMENT':
-      console.log('todo - how to know the elI of current focus', action.newElI)
-      console.log(state.elements[action.newElI].inputRef.current)
       state.elements[action.newElI].inputRef.current.focus()
       return {
         ...state,
