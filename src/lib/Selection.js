@@ -43,11 +43,11 @@ export default class {
           
           
           
-          let tmpNode = document.createTextNode('\ufeff');
-          this.r.insertNode(tmpNode);
-          const nextRect = this.r.getBoundingClientRect();
-          console.log('r', nextRect.right - domEl.offsetLeft)
-          tmpNode.remove();
+          // let tmpNode = document.createTextNode('\ufeff');
+          // this.r.insertNode(tmpNode);
+          // const nextRect = this.r.getBoundingClientRect();
+          // console.log('r', nextRect.right - domEl.offsetLeft)
+          // tmpNode.remove();
 
           
           

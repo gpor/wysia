@@ -42,7 +42,8 @@ function Editable({ element, toNext, isFocused = false }) {
     } else if (e.key === 'ArrowUp') {
       // console.log('caretX', caretX)
       const sel = new Selection()
-      if (sel.from('top', { element }) < 15) {
+      console.log('sel.r.startOffset', sel.r.startOffset)
+      if (sel.from('top', { element }) < 15 && sel.r.startOffset > 0) {
         if (element.i > 0) {
           const moveToAction = cursorMoveYAction(-1, element.i)
           if (moveToAction) {
