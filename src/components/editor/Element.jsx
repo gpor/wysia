@@ -61,9 +61,12 @@ function Editable({ element, toNext, isFocused = false }) {
       // console.log('caretX', caretX)
       const sel = new Selection()
       if (sel.from('bottom', { element }) < 15) {
+        // console.log('at bottom', element.i, elements.length)
         if (element.i < elements.length - 1) {
+          // console.log('calling cursorMoveYAction')
           const moveToAction = cursorMoveYAction(1, element.i)
           if (moveToAction) {
+            // console.log('got action')
             e.preventDefault();
             dispatch(moveToAction)
           }
