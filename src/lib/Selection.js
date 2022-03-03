@@ -1,9 +1,14 @@
 
 export default class {
   constructor() {
+    this.s = null
+    this.r = null
+    this._rect = null
+    this.setSelectionAndRange()
+  }
+  setSelectionAndRange() {
     this.s = document.getSelection()
     this.r = this.s.getRangeAt(0)
-    this._rect = null
   }
   rect() {
     if (this._rect === null) {
@@ -42,13 +47,19 @@ export default class {
           }
           
           
-          
-          // let tmpNode = document.createTextNode('\ufeff');
-          // this.r.insertNode(tmpNode);
-          // const nextRect = this.r.getBoundingClientRect();
-          // console.log('r', nextRect.right - domEl.offsetLeft)
-          // tmpNode.remove();
+          if (false) {
+            let tmpNode = document.createTextNode('\ufeff');
+            this.r.insertNode(tmpNode);
+            const nextRect = this.r.getBoundingClientRect();
+            console.log('r', nextRect.right - domEl.offsetLeft)
+            tmpNode.remove();
+          }
 
+          const span = document.createElement('span');
+          // console.log('splitter br', br)
+          this.r.insertNode(span)
+          this.r.selectNode(span)
+          this.setSelectionAndRange()
           
           
           
