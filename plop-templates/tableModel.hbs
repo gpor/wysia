@@ -13,8 +13,10 @@ class {{ properCase rowName }} extends Row {
   constructor(data) {
     super(data)
     this.id = data.id || uuidv4()
+    
     this.fill(data)
+  }
 }
 
-
-export default {{ properCase tableName }}
+export { {{ properCase rowName }} }
+export default {{ properCase tableName }}Table

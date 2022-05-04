@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+2022-02-18
+wysiwyg on ReactJs
+create-next-app, sass, context providers, reducers
+notes/web/exp/vf1
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
