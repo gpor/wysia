@@ -55,11 +55,10 @@ export default class {
             tmpNode.remove();
           }
 
-          const span = document.createElement('span');
-          // console.log('splitter br', br)
-          this.r.insertNode(span)
-          this.r.selectNode(span)
-          this.setSelectionAndRange()
+          // const span = document.createElement('span');
+          // this.r.insertNode(span)
+          // this.r.selectNode(span)
+          // this.setSelectionAndRange()
           
           
           
